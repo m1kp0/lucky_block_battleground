@@ -2,6 +2,7 @@
 local cam = workspace.Camera
 local plrs = game.Players
 local plr = plrs.LocalPlayer
+local light = game.Lighting
 local replic = game:GetService'ReplicatedStorage'
 local uis = game:GetService'UserInputService'
 
@@ -289,31 +290,27 @@ ScriptTab:AddButton({
 TimeTab:AddButton({
 	Name = 'night',
 	Callback = function()
-        local args = {[1] = 1}
-        replic.SpawnRainbowBlock:FireServer(unpack(args))
+        game.Lighting.ClockTime = 0
   	end    
 })
 
 TimeTab:AddButton({
 	Name = 'day',
 	Callback = function()
-        local args = {[1] = 1}
-        replic.SpawnRainbowBlock:FireServer(unpack(args))
+        game.Lighting.ClockTime = 12
   	end    
 })
 
 TimeTab:AddButton({
 	Name = 'evening',
 	Callback = function()
-        local args = {[1] = 1}
-        replic.SpawnRainbowBlock:FireServer(unpack(args))
+        game.Lighting.ClockTime = 18
   	end    
 })
 
 TimeTab:AddButton({
 	Name = 'morning',
 	Callback = function()
-        local args = {[1] = 1}
-        replic.SpawnRainbowBlock:FireServer(unpack(args))
+        game.Lighting.ClockTime = 6
   	end    
 })
