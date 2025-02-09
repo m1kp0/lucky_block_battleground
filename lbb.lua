@@ -245,8 +245,6 @@ LuckyBlockTab:AddToggle({
 })
 
 -- scripts tab
-LuckyBlockTab:AddSection({Name = 'other scripts'})
-
 ScriptTab:AddButton({
 	Name = 'infinite yield FE',
 	Callback = function()
