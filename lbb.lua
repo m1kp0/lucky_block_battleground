@@ -387,13 +387,15 @@ AdvanceTab:AddToggle({
 									if pHRP then
 										if (plr.Character.HumanoidRootPart.Position - pChar.HumanoidRootPart.Position).Magnitude <= auraRadius then
 											if pHRP and p.Character.Humanoid.Health ~= 0 then
+												local plr = game.Players.LocalPlayer
 												if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
 													local pos = plr.Character.HumanoidRootPart.Position
-													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+													local cam = workspace.CurrentCamera
+													cam.CFrame = CFrame.new(cam.CFrame.p, p.Head.CFrame.p)
 													wait()
-													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+													cam.CFrame = CFrame.new(cam.CFrame.p, p.Head.CFrame.p)
 													wait()
-													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+													cam.CFrame = CFrame.new(cam.CFrame.p, p.Head.CFrame.p)
 													wait(0.7)
 													plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
 													wait()
@@ -405,7 +407,7 @@ AdvanceTab:AddToggle({
 							end
 						end
 					end)
-					wait(0.02)
+					wait(0.1)
 				end
 			end)
 			coroutine.resume(aura)
