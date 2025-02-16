@@ -5,8 +5,6 @@ local plr = plrs.LocalPlayer
 local light = game.Lighting
 local replic = game:GetService'ReplicatedStorage'
 local uis = game:GetService'UserInputService'
-local pToKill
-local whitelistEn
 
 -- toggle
 -- as is auto spawn
@@ -15,7 +13,10 @@ local as_slb
 local as_rlb
 local as_dimlb
 local as_glb
+local whitelistEn
 local infJump
+local aura
+local auraRadius
 
 -- lib
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/m1kp0/libraries/refs/heads/main/m1kpe0_orion_lib.lua')))()
@@ -351,7 +352,7 @@ AdvanceTab:AddButton({
 		for i, p in pairs(plrs:GetPlayers()) do
 			if p.Character then
 				if plr.Character.Humanoid.Health ~= 0 and p.Character.Humanoid.Health ~= 0 then
-					if not whitelistEn or not game.Players.LocalPlayer:IsFriendsWith(p.UserId) then
+					if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
 						plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
 						wait()
 						plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
@@ -368,28 +369,67 @@ AdvanceTab:AddButton({
 })
 
 AdvanceTab:AddToggle({
+	Name = 'kill aura',
+	Default = false,
+	Color = Color3.fromRGB(102, 0, 102),
+	Callback = function(e)
+        if e then
+			aura = coroutine.create(function()
+				while e do
+					pcall(function()
+						local char = plr.Character
+						if char and char:FindFirstChild("HumanoidRootPart") then
+							local hrp = char.HumanoidRootPart
+							for _, p in pairs(plrs:GetPlayers()) do
+								if p ~= plr and p.Character then
+									local pChar = p.Character
+									local pHRP = pChar:FindFirstChild("HumanoidRootPart")
+									if pHRP then
+										if (plr.Character.HumanoidRootPart.Position - pChar.HumanoidRootPart.Position).Magnitude <= auraRadius then
+											if pHRP and p.Character.Humanoid.Health ~= 0 then
+												if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
+													local pos = plr.Character.HumanoidRootPart.Position
+													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+													wait()
+													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+													wait()
+													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+													wait(0.7)
+													plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+													wait()
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+					end)
+					wait(0.02)
+				end
+			end)
+			coroutine.resume(aura)
+		elseif aura then
+			coroutine.close(aura)
+			aura = nil
+		end
+	end
+})
+
+AdvanceTab:AddTextbox({
+	Name = "aura radius",
+	Default = "50",
+	TextDisappear = false,
+	Callback = function(e)
+		auraRadius = e
+	end	  
+})
+
+AdvanceTab:AddToggle({
 	Name = 'whitelist friends',
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
         whitelistEn = e
-	end
-})
-
-AdvanceTab:AddToggle({
-	Name = 'anti time stop',
-	Default = false,
-	Color = Color3.fromRGB(102, 0, 102),
-	Callback = function(e)
-        while e do
-            wait(0.1)
-            for i, v in pairs(plr:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    if v.Anchored then
-                        v.Anchored = false
-                    end
-                end
-            end
-        end
 	end
 })
