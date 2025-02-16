@@ -331,7 +331,7 @@ AdvanceTab:AddButton({
 	Name = 'insane damage: equip all best swords',
 	Callback = function()
 		for i, tool in pairs(plr.Backpack:GetChildren()) do
-			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
+			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'SpectralSword' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
 				tool.Parent = plr.Character
 			end
 		end
@@ -344,7 +344,7 @@ AdvanceTab:AddButton({
 		local plr = game.Players.LocalPlayer
 		local pos = plr.Character.HumanoidRootPart.Position
 		for i, tool in pairs(plr.Backpack:GetChildren()) do
-			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
+			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'SpectralSword' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
 				tool.Parent = plr.Character
 			end
 		end
@@ -373,5 +373,23 @@ AdvanceTab:AddToggle({
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
         whitelistEn = e
+	end
+})
+
+AdvanceTab:AddToggle({
+	Name = 'anti time stop',
+	Default = false,
+	Color = Color3.fromRGB(102, 0, 102),
+	Callback = function(e)
+        while e do
+            wait(0.1)
+            for i, v in pairs(plr:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    if v.Anchored then
+                        v.Anchored = false
+                    end
+                end
+            end
+        end
 	end
 })
