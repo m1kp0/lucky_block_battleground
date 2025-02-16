@@ -16,7 +16,7 @@ local as_glb
 local whitelistEn
 local infJump
 local aura
-local auraRadius
+local auraRadius = 70
 
 -- lib
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/m1kp0/libraries/refs/heads/main/m1kpe0_orion_lib.lua')))()
@@ -414,15 +414,6 @@ AdvanceTab:AddToggle({
 			aura = nil
 		end
 	end
-})
-
-AdvanceTab:AddTextbox({
-	Name = "aura radius",
-	Default = "50",
-	TextDisappear = false,
-	Callback = function(e)
-		auraRadius = e
-	end	  
 })
 
 AdvanceTab:AddToggle({
