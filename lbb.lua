@@ -390,12 +390,11 @@ AdvanceTab:AddToggle({
 												local plr = game.Players.LocalPlayer
 												if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
 													local pos = plr.Character.HumanoidRootPart.Position
-													local cam = workspace.CurrentCamera
-													cam.CFrame = CFrame.new(cam.CFrame.p, p.Head.CFrame.p)
+													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
 													wait()
-													cam.CFrame = CFrame.new(cam.CFrame.p, p.Head.CFrame.p)
+													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
 													wait()
-													cam.CFrame = CFrame.new(cam.CFrame.p, p.Head.CFrame.p)
+													plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
 													wait(0.7)
 													plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
 													wait()
