@@ -5,6 +5,8 @@ local plr = plrs.LocalPlayer
 local light = game.Lighting
 local replic = game:GetService'ReplicatedStorage'
 local uis = game:GetService'UserInputService'
+local pToKill
+local whitelistEn
 
 -- toggle
 -- as is auto spawn
@@ -24,6 +26,7 @@ local CharTab = Window:MakeTab({Name = 'character', Icon = '', PremiumOnly = fal
 local LuckyBlockTab = Window:MakeTab({Name = 'lucky blocks', Icon = '', PremiumOnly = false})
 local ScriptTab = Window:MakeTab({Name = 'scripts', Icon = '', PremiumOnly = false})
 local TimeTab = Window:MakeTab({Name = 'clock time', Icon = '', PremiumOnly = false})
+local AdvanceTab = Window:MakeTab({Name = 'advanced', Icon = '', PremiumOnly = false})
 
 -- character tab
 CharTab:AddSlider({
@@ -67,7 +70,7 @@ CharTab:AddButton({
 })
 
 CharTab:AddToggle({
-	Name = "infinite jumps",
+	Name = 'infinite jumps',
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(Value)
@@ -75,7 +78,7 @@ CharTab:AddToggle({
 			infJump = true
 			uis.JumpRequest:Connect(function()
 				if infJump then
-					plr.Character.Humanoid:ChangeState("Jumping")
+					plr.Character.Humanoid:ChangeState('Jumping')
 				end
 			end)
 		else
@@ -313,4 +316,62 @@ TimeTab:AddButton({
 	Callback = function()
         game.Lighting.ClockTime = 6
   	end    
+})
+
+AdvanceTab:AddButton({
+	Name = 'equip all tools',
+	Callback = function()
+        for i, tool in pairs(plr.Backpack:GetChildren()) do
+			tool.Parent = plr.Character
+		end
+  	end    
+})
+
+AdvanceTab:AddButton({
+	Name = 'insane damage: equip all best swords',
+	Callback = function()
+		for i, tool in pairs(plr.Backpack:GetChildren()) do
+			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
+				tool.Parent = plr.Character
+			end
+		end
+  	end    
+})
+
+AdvanceTab:AddButton({
+	Name = 'kill all',
+	Callback = function()
+		local plr = game.Players.LocalPlayer
+		local pos = plr.Character.HumanoidRootPart.Position
+		for i, tool in pairs(plr.Backpack:GetChildren()) do
+			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
+				tool.Parent = plr.Character
+			end
+		end
+		for i, p in pairs(plrs:GetPlayers()) do
+			if p.Character then
+				if plr.Character.Humanoid.Health ~= 0 and p.Character.Humanoid.Health ~= 0 then
+					if not whitelistEn or not game.Players.LocalPlayer:IsFriendsWith(p.UserId) then
+						plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+						wait()
+						plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+						wait()
+						plr.Character.HumanoidRootPart.CFrame = CFrame.new(p.Character.HumanoidRootPart.Position)
+						wait(0.7)
+						plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+						wait()
+					end
+				end
+			end
+		end
+  	end 
+})
+
+AdvanceTab:AddToggle({
+	Name = 'whitelist friends',
+	Default = false,
+	Color = Color3.fromRGB(102, 0, 102),
+	Callback = function(e)
+        whitelistEn = e
+	end
 })
