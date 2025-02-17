@@ -16,7 +16,20 @@ local as_glb
 local whitelistEn
 local infJump
 local aura
-local auraRadius = 70
+local auraRadius = 50
+
+local function kill(nigga)
+  local pHRP = nigga.Character.HumanoidRootPart
+  local lastCF = plr.Character.HumanoidRootPart.CFrame
+						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+						wait()
+						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+						wait()
+						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+						wait(0.7)
+						plr.Character.HumanoidRootPart.CFrame = lastCF
+						wait()
+end
 
 -- lib
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/m1kp0/libraries/refs/heads/main/m1kpe0_orion_lib.lua')))()
@@ -353,15 +366,7 @@ AdvanceTab:AddButton({
 			if p.Character then
 				if plr.Character.Humanoid.Health ~= 0 and p.Character.Humanoid.Health ~= 0 then
 					if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
-  local pHRP = p.Character.HumanoidRootPart
-						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-						wait()
-						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-						wait()
-						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-						wait(0.7)
-						plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
-						wait()
+  kill(p)
 					end
 				end
 			end
@@ -374,7 +379,7 @@ AdvanceTab:AddToggle({
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
-        if e then
+ if e then
 			aura = coroutine.create(function()
 				while e do
 					pcall(function()
@@ -390,18 +395,7 @@ AdvanceTab:AddToggle({
 											if pHRP and p.Character.Humanoid.Health ~= 0 then
 												local plr = game.Players.LocalPlayer
 												if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
-													local pos = plr.Character.HumanoidRootPart.CFrame
-     local nigga = Velocity_Asset:Clone()
-     nigga.Parent = plr.Character.HumanoidRootPart
-     plr.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-													wait()
-													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-													wait()
-													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-													wait(0.7)
-													plr.Character.HumanoidRootPart.CFrame = pos
-													wait()
+													kill(p)
 												end
 											end
 										end
