@@ -21,16 +21,14 @@ local auraRadius = 50
 local function kill(nigga)
 	local pHRP = nigga.Character.HumanoidRootPart
 	local lastCF = plr.Character.HumanoidRootPart.CFrame
-	if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
-		plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-		wait()
-		plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-		wait()
-		plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
-		wait(0.7)
-		plr.Character.HumanoidRootPart.CFrame = lastCF
-		wait()
-	end
+	plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+	wait()
+	plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+	wait()
+	plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+	wait(0.7)
+	plr.Character.HumanoidRootPart.CFrame = lastCF
+	wait()
 end
 
 -- lib
