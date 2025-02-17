@@ -353,12 +353,12 @@ AdvanceTab:AddButton({
 			if p.Character then
 				if plr.Character.Humanoid.Health ~= 0 and p.Character.Humanoid.Health ~= 0 then
 					if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
-  local pHRP = p.Character.HumanoidRootPart
-						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+  						local pHRP = p.Character.HumanoidRootPart
+						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.3)
 						wait()
-						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.3)
 						wait()
-						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+						plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.3)
 						wait(0.7)
 						plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
 						wait()
@@ -391,14 +391,11 @@ AdvanceTab:AddToggle({
 												local plr = game.Players.LocalPlayer
 												if not whitelistEn or not plr:IsFriendsWith(p.UserId) then
 													local pos = plr.Character.HumanoidRootPart.CFrame
-     local nigga = Velocity_Asset:Clone()
-     nigga.Parent = plr.Character.HumanoidRootPart
-     plr.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.3)
 													wait()
-													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.3)
 													wait()
-													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.1)
+													plr.Character.HumanoidRootPart.CFrame = pHRP.CFrame * CFrame.new(0, 0, 1.3)
 													wait(0.7)
 													plr.Character.HumanoidRootPart.CFrame = pos
 													wait()
