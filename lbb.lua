@@ -55,7 +55,6 @@ local function equipBest()
 		for i, sword in pairs(bestSwords) do
 			if tool.Name == sword then
 				tool.Parent = plr.Character
-				wait()
 			end
 		end
 	end
@@ -367,6 +366,7 @@ AdvanceTab:AddButton({
 	Callback = function()
         for i, tool in pairs(plr.Backpack:GetChildren()) do
 			tool.Parent = plr.Character
+			wait()
 		end
   	end    
 })
