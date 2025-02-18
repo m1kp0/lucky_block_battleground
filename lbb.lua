@@ -3,8 +3,8 @@ local cam = workspace.Camera
 local plrs = game.Players
 local plr = plrs.LocalPlayer
 local light = game.Lighting
-local replic = game:GetService'ReplicatedStorage'
-local uis = game:GetService'UserInputService'
+local replic = game:GetService"ReplicatedStorage"
+local uis = game:GetService"UserInputService"
 
 -- toggle
 -- as is auto spawn
@@ -17,6 +17,25 @@ local whitelistEn
 local infJump
 local aura
 local auraRadius = 50
+
+local bestSwords = {
+	"ChartreusePeriastron",
+	"IvoryPeriastron",
+	"SpectralSword",
+	"CrimsonPeriastron",
+	"SpecOmegaBiograftEnergySword",
+	"DualSpecGammaBiograftEnergySword",
+	"RainbowPeriastron",
+	"Illumina",
+	"DaggerOfShatteredDimensions",
+	"SpecZetaBiograftEnergySword",
+	"SpecGammaBiograftEnergySword",
+	"Magician'sCloak",
+	"Ice Dragon Slaying Sword",
+	"FireSword",
+	"CrescendoTheSoulStealer",
+	"FangOfTsuchigumo"
+}
 
 local function kill(nigga)
 	local pHRP = nigga.Character.HumanoidRootPart
@@ -31,24 +50,35 @@ local function kill(nigga)
 	wait()
 end
 
+local function equipBest()
+	for i, tool in pairs(plr.Backpack:GetChildren()) do
+		for i, sword in pairs(bestSwords) do
+			if tool.Name == sword then
+				tool.Parent = plr.Character
+				wait()
+			end
+		end
+	end
+end
+
 -- lib
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/m1kp0/libraries/refs/heads/main/m1kpe0_orion_lib.lua')))()
-local Window = OrionLib:MakeWindow({Name = 'm1kp | lucky block battleground', HidePremium = false, IntroEnabled = false, IntroText = 'Loading..', SaveConfig = true, ConfigFolder = 'OrionTest'})
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/m1kp0/libraries/refs/heads/main/m1kpe0_orion_lib.lua")))()
+local Window = OrionLib:MakeWindow({Name = "m1kp | lucky block battleground", HidePremium = false, IntroEnabled = false, IntroText = "Loading..", SaveConfig = true, ConfigFolder = "OrionTest"})
 
 -- tabs
-local CharTab = Window:MakeTab({Name = 'character', Icon = '', PremiumOnly = false})
-local LuckyBlockTab = Window:MakeTab({Name = 'lucky blocks', Icon = '', PremiumOnly = false})
-local ScriptTab = Window:MakeTab({Name = 'scripts', Icon = '', PremiumOnly = false})
-local TimeTab = Window:MakeTab({Name = 'clock time', Icon = '', PremiumOnly = false})
-local AdvanceTab = Window:MakeTab({Name = 'advanced', Icon = '', PremiumOnly = false})
+local CharTab = Window:MakeTab({Name = "character", Icon = "", PremiumOnly = false})
+local LuckyBlockTab = Window:MakeTab({Name = "lucky blocks", Icon = "", PremiumOnly = false})
+local ScriptTab = Window:MakeTab({Name = "scripts", Icon = "", PremiumOnly = false})
+local TimeTab = Window:MakeTab({Name = "clock time", Icon = "", PremiumOnly = false})
+local AdvanceTab = Window:MakeTab({Name = "advanced", Icon = "", PremiumOnly = false})
 
 -- character tab
 CharTab:AddSlider({
-    Name = 'walk speed',
+    Name = "walk speed",
     Min = 0,
     Max = 100,
     Color = Color3.fromRGB(102, 0, 102),
-    ValueName = '',
+    ValueName = "",
     Increment = 1,
     Default = 16,
     Callback = function(e)
@@ -57,18 +87,18 @@ CharTab:AddSlider({
 })
 
 CharTab:AddButton({
-	Name = 'reset walk speed',
+	Name = "reset walk speed",
 	Callback = function()
       	plr.Character.Humanoid.WalkSpeed = 16
   	end    
 })
 
 CharTab:AddSlider({
-    Name = 'jump power',
+    Name = "jump power",
     Min = 0,
     Max = 1000,
     Color = Color3.fromRGB(102, 0, 102),
-    ValueName = '',
+    ValueName = "",
     Increment = 1,
     Default = 50,
     Callback = function(e)
@@ -77,14 +107,14 @@ CharTab:AddSlider({
 })
 
 CharTab:AddButton({
-	Name = 'reset jump power',
+	Name = "reset jump power",
 	Callback = function()
       	plr.Character.Humanoid.JumpPower = 50
   	end    
 })
 
 CharTab:AddToggle({
-	Name = 'infinite jumps',
+	Name = "infinite jumps",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(Value)
@@ -92,7 +122,7 @@ CharTab:AddToggle({
 			infJump = true
 			uis.JumpRequest:Connect(function()
 				if infJump then
-					plr.Character.Humanoid:ChangeState('Jumping')
+					plr.Character.Humanoid:ChangeState("Jumping")
 				end
 			end)
 		else
@@ -102,11 +132,11 @@ CharTab:AddToggle({
 })
 
 CharTab:AddSlider({
-    Name = 'gravity',
+    Name = "gravity",
     Min = 0,
     Max = 1000,
     Color = Color3.fromRGB(102, 0, 102),
-    ValueName = '',
+    ValueName = "",
     Increment = 1,
     Default = 196,
     Callback = function(e)
@@ -115,18 +145,18 @@ CharTab:AddSlider({
 })
 
 CharTab:AddButton({
-	Name = 'reset gravity',
+	Name = "reset gravity",
 	Callback = function()
       	workspace.Gravity = 196
   	end    
 })
 
 CharTab:AddSlider({
-    Name = 'field of view',
+    Name = "field of view",
     Min = 1,
     Max = 120,
     Color = Color3.fromRGB(102, 0, 102),
-    ValueName = '',
+    ValueName = "",
     Increment = 1,
     Default = 70,
     Callback = function(e)
@@ -135,17 +165,17 @@ CharTab:AddSlider({
 })
 
 CharTab:AddButton({
-	Name = 'reset field of view',
+	Name = "reset field of view",
 	Callback = function()
       	cam.FieldOfView = 70
   	end    
 })
 
 -- lucky blocks tab
-LuckyBlockTab:AddSection({Name = 'default lucky block'})
+LuckyBlockTab:AddSection({Name = "default lucky block"})
 
 LuckyBlockTab:AddButton({
-	Name = 'spawn block',
+	Name = "spawn block",
 	Callback = function()
         local args = {[1] = 1}
         replic.SpawnLuckyBlock:FireServer(unpack(args))
@@ -153,7 +183,7 @@ LuckyBlockTab:AddButton({
 })
 
 LuckyBlockTab:AddToggle({
-	Name = 'auto spawn block',
+	Name = "auto spawn block",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
@@ -166,10 +196,10 @@ LuckyBlockTab:AddToggle({
 	end
 })
 
-LuckyBlockTab:AddSection({Name = 'super lucky block'})
+LuckyBlockTab:AddSection({Name = "super lucky block"})
 
 LuckyBlockTab:AddButton({
-	Name = 'spawn block',
+	Name = "spawn block",
 	Callback = function()
         local args = {[1] = 1}
         replic.SpawnSuperBlock:FireServer(unpack(args))
@@ -177,7 +207,7 @@ LuckyBlockTab:AddButton({
 })
 
 LuckyBlockTab:AddToggle({
-	Name = 'auto spawn block',
+	Name = "auto spawn block",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
@@ -190,10 +220,10 @@ LuckyBlockTab:AddToggle({
 	end
 })
 
-LuckyBlockTab:AddSection({Name = 'diamond lucky block'})
+LuckyBlockTab:AddSection({Name = "diamond lucky block"})
 
 LuckyBlockTab:AddButton({
-	Name = 'spawn block',
+	Name = "spawn block",
 	Callback = function()
         local args = {[1] = 1}
         replic.SpawnDiamondBlock:FireServer(unpack(args))
@@ -201,7 +231,7 @@ LuckyBlockTab:AddButton({
 })
 
 LuckyBlockTab:AddToggle({
-	Name = 'auto spawn block',
+	Name = "auto spawn block",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
@@ -214,10 +244,10 @@ LuckyBlockTab:AddToggle({
 	end
 })
 
-LuckyBlockTab:AddSection({Name = 'rainbow lucky block'})
+LuckyBlockTab:AddSection({Name = "rainbow lucky block"})
 
 LuckyBlockTab:AddButton({
-	Name = 'spawn block',
+	Name = "spawn block",
 	Callback = function()
         local args = {[1] = 1}
         replic.SpawnRainbowBlock:FireServer(unpack(args))
@@ -225,7 +255,7 @@ LuckyBlockTab:AddButton({
 })
 
 LuckyBlockTab:AddToggle({
-	Name = 'auto spawn block',
+	Name = "auto spawn block",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
@@ -238,10 +268,10 @@ LuckyBlockTab:AddToggle({
 	end
 })
 
-LuckyBlockTab:AddSection({Name = 'galaxy lucky block'})
+LuckyBlockTab:AddSection({Name = "galaxy lucky block"})
 
 LuckyBlockTab:AddButton({
-	Name = 'spawn block',
+	Name = "spawn block",
 	Callback = function()
         local args = {[1] = 1}
         replic.SpawnGalaxyBlock:FireServer(unpack(args))
@@ -249,7 +279,7 @@ LuckyBlockTab:AddButton({
 })
 
 LuckyBlockTab:AddToggle({
-	Name = 'auto spawn block',
+	Name = "auto spawn block",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
@@ -264,76 +294,76 @@ LuckyBlockTab:AddToggle({
 
 -- scripts tab
 ScriptTab:AddButton({
-	Name = 'infinite yield FE',
+	Name = "infinite yield FE",
 	Callback = function()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
   	end    
 })
 
 ScriptTab:AddButton({
-	Name = 'system broken',
+	Name = "system broken",
 	Callback = function()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/H20CalibreYT/SystemBroken/main/script'))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/H20CalibreYT/SystemBroken/main/script"))()
   	end    
 })
 
 ScriptTab:AddButton({
-	Name = 'dex explorer',
+	Name = "dex explorer",
 	Callback = function()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/infyiff/backup/main/dex.lua'))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
   	end    
 })
 
 ScriptTab:AddButton({
-	Name = 'path & float (m1kp)',
+	Name = "path & float (m1kp)",
 	Callback = function()
-		loadstring(game:HttpGet('https://raw.githubusercontent.com/m1kp0/universal_scripts/refs/heads/main/ONLY-PC_pathing'))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/m1kp0/universal_scripts/refs/heads/main/ONLY-PC_pathing"))()
 	end    
 })
 
 ScriptTab:AddButton({
-	Name = 'm1kp`s github (more scripts)',
+	Name = "m1kp`s github (more scripts)",
 	Callback = function()
-		setclipboard(tostring('https://github.com/m1kp0'))
+		setclipboard(tostring("https://github.com/m1kp0"))
         OrionLib:MakeNotification({
-            Name = 'copied link',
-            Content = 'github',
-            Image = 'rbxassetid://4483345998',
+            Name = "copied link",
+            Content = "github",
+            Image = "rbxassetid://4483345998",
             Time = 3
         })
 	end    
 })
 
 TimeTab:AddButton({
-	Name = 'night',
+	Name = "night",
 	Callback = function()
         game.Lighting.ClockTime = 0
   	end    
 })
 
 TimeTab:AddButton({
-	Name = 'day',
+	Name = "day",
 	Callback = function()
         game.Lighting.ClockTime = 12
   	end    
 })
 
 TimeTab:AddButton({
-	Name = 'evening',
+	Name = "evening",
 	Callback = function()
         game.Lighting.ClockTime = 18
   	end    
 })
 
 TimeTab:AddButton({
-	Name = 'morning',
+	Name = "morning",
 	Callback = function()
         game.Lighting.ClockTime = 6
   	end    
 })
 
 AdvanceTab:AddButton({
-	Name = 'equip all tools',
+	Name = "equip all tools",
 	Callback = function()
         for i, tool in pairs(plr.Backpack:GetChildren()) do
 			tool.Parent = plr.Character
@@ -342,26 +372,18 @@ AdvanceTab:AddButton({
 })
 
 AdvanceTab:AddButton({
-	Name = 'insane damage: equip all best swords',
+	Name = "insane damage: equip all best swords",
 	Callback = function()
-		for i, tool in pairs(plr.Backpack:GetChildren()) do
-			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'SpectralSword' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
-				tool.Parent = plr.Character
-			end
-		end
+		equipBest()
   	end    
 })
 
 AdvanceTab:AddButton({
-	Name = 'kill all',
+	Name = "kill all",
 	Callback = function()
 		local plr = game.Players.LocalPlayer
 		local pos = plr.Character.HumanoidRootPart.Position
-		for i, tool in pairs(plr.Backpack:GetChildren()) do
-			if tool.Name == 'ChartreusePeriastron' or tool.Name == 'IvoryPeriastron' or tool.Name == 'SpectralSword' or tool.Name == 'CrimsonPeriastron' or tool.Name == 'SpecOmegaBiograftEnergySword' or tool.Name == 'SpecEpsilonBiograftEnergySword' or tool.Name == 'SpecRedBiograftEnergySword' or tool.Name == 'DualSpecGammaBiograftEnergySword' or tool.Name == 'RainbowPeriastron' or tool.Name == 'Illumina' or tool.Name == 'DaggerOfShatteredDimensions' or tool.Name == 'SpecZetaBiograftEnergySword' or tool.Name == 'SpecGammaBiograftEnergySword' then
-				tool.Parent = plr.Character
-			end
-		end
+		equipBest()
 		for i, p in pairs(plrs:GetPlayers()) do
 			if p.Character then
 				if plr.Character.Humanoid.Health ~= 0 and p.Character.Humanoid.Health ~= 0 then
@@ -375,11 +397,12 @@ AdvanceTab:AddButton({
 })
 
 AdvanceTab:AddToggle({
-	Name = 'kill aura',
+	Name = "kill aura",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
- if e then
+ 			if e then
+			equipBest()
 			aura = coroutine.create(function()
 				while e do
 					pcall(function()
@@ -404,7 +427,7 @@ AdvanceTab:AddToggle({
 							end
 						end
 					end)
-					wait(0.1)
+					wait(0.5)
 				end
 			end)
 			coroutine.resume(aura)
@@ -416,7 +439,7 @@ AdvanceTab:AddToggle({
 })
 
 AdvanceTab:AddToggle({
-	Name = 'whitelist friends',
+	Name = "whitelist friends",
 	Default = false,
 	Color = Color3.fromRGB(102, 0, 102),
 	Callback = function(e)
